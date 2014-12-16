@@ -210,7 +210,7 @@ To ensure base API urls are kept simple, additional result/query filtering is im
 *Simple Filters:* Use a unique query parameter for each field that implements filtering. For example, when requesting a list of openitems from the /openitems 
 endpoint, you may want to limit these to only those with an open status. This could be accomplished with a request like:
 
-   GET /openitems/CS/CENSOF?status=open. 
+    GET /openitems/CS/CENSOF?status=open. 
    
 Here, status is a query parameter that implements the filter.
 
@@ -218,7 +218,7 @@ Here, status is a query parameter that implements the filter.
 parameters if the endpoint supports them. For example, when requesting a list of openitems for a customer from the /openitems 
 endpoint, you may want to limit these to specific item numbers. This could be accomplished with a request like:
 
-   GET /openitems/CS/CENSOF?filter=aroi_itemno+in+101,103,105
+    GET /openitems/CS/CENSOF?filter=aroi_itemno+in+101,103,105
 
 A filter query parameter consists of three components, a column/attribute name, a comparision operator and a comparison value. These three components
 are separated by spaces which need to be encoded in the query string using either + symbol or %20 encoded character. The supported comparison operators are:
@@ -235,6 +235,8 @@ are separated by spaces which need to be encoded in the query string using eithe
 
 A filter using multiple columns/attributes can be achieved by having multiple filter query parameters.
 These filters are ANDed together in the backend query.
+
+    GET /openitems/CS/CENSOF?filter==aroi_openamount+gt+0&filter=aroi_itemtype+eq+INV
 
 **Sorting**
 
