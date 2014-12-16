@@ -203,6 +203,39 @@ Collection requests can return between 0 to 100 results per request, controlled 
 
 Not all endpoints support pagination.
 
+**Result/Query Filtering**
+
+To ensure base API urls are kept simple, additional result/query filtering is implemented using query parameters on the base url.
+
+*Simple Filters:* Use a unique query parameter for each field that implements filtering. For example, when requesting a list of openitems from the /openitems 
+endpoint, you may want to limit these to only those with an open status. This could be accomplished with a request like:
+
+   GET /openitems/CS/CENSOF?status=open. 
+   
+Here, status is a query parameter that implements the filter.
+
+*Advanced Filters*: Sometimes basic filters are not enough or you need to perform an adhoc query. This is implemented using one or more filter query 
+parameters if the endpoint supports them. For example, when requesting a list of openitems for a customer from the /openitems 
+endpoint, you may want to limit these to specific item numbers. This could be accomplished with a request like:
+
+   GET /openitems/CS/CENSOF?filter=aroi_itemno+in+101,103,105
+
+A filter query parameter consists of three components, a column/attribute name, a comparision operator and a comparison value. These three components
+are separated by spaces which need to be encoded in the query string using either + symbol or %20 encoded character. The supported comparison operators are:
+
+* eq - equal to the comparsion value
+* ne - not equal to the comparsion value
+* lt - less than the comparsion value
+* le - less than or equal to the comparsion value
+* gt - greater than the comparsion value
+* ge - less than or equal to the comparsion value
+* in - equal to 1 item in a list of values
+* notin - not in the list of comparision values
+* like - like a SQL pattern contained in the comparsion value
+
+A filter using multiple columns/attributes can be achieved by having multiple filter query parameters.
+These filters are ANDed together in the backend query.
+
 **Sorting**
 
 Some collection endpoints provide result sorting, activated by using the sort query parameter. The value of the sort is a comma separated list of fields to sort by. A descending sort can be specified by prepending a - to a field in the sort list. For performance reasons not all fields can be sorted on. The API endpoint specific documentation will list supported sort options.
